@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Профессиональный электромонтаж в Москве и области. Черновые и чистовые работы, монтаж щитов, прокладка кабеля. Гарантия на все виды работ.">
+  <title>Электромонтаж — профессиональные электромонтажные работы</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="#" class="logo">
+        <span class="logo__icon">⚡</span>
+        <span class="logo__text">Электро<span>Монтаж</span></span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="#services">Услуги</a>
+        <a href="#prices">Прайс</a>
+        <a href="#calculator">Калькулятор</a>
+        <a href="#team">Команда</a>
+        <a href="#advantages">О нас</a>
+        <a href="#contact">Контакты</a>
+      </nav>
+      <a href="tel:+79000000000" class="header__phone">+7 (900) 000-00-00</a>
+      <button class="burger" id="burger" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="container hero__content">
+      <div class="hero__badge">Работаем с 2018 года</div>
+      <h1>Профессиональный<br><span>электромонтаж</span> под ключ</h1>
+      <p class="hero__desc">Черновой и чистовой монтаж, сборка щитов, прокладка кабеля, штробление и установка розеток. Быстро, аккуратно, с гарантией на все виды работ.</p>
+      <div class="hero__actions">
+        <a href="#calculator" class="btn btn--primary">Рассчитать стоимость</a>
+        <a href="#prices" class="btn btn--outline">Смотреть прайс</a>
+      </div>
+      <div class="hero__stats">
+        <div class="stat">
+          <strong>500+</strong>
+          <span>объектов</span>
+        </div>
+        <div class="stat">
+          <strong>8 лет</strong>
+          <span>опыта</span>
+        </div>
+        <div class="stat">
+          <strong>2 года</strong>
+          <span>гарантия</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Что мы делаем</span>
+        <h2>Наши услуги</h2>
+        <p>Полный спектр электромонтажных работ — от черновой разводки до чистовой установки оборудования</p>
+      </div>
+      <div class="services__grid">
+        <article class="service-card">
+          <div class="service-card__icon">🔌</div>
+          <h3>Черновой монтаж</h3>
+          <p>Штробление, сверление подрозетников, прокладка кабеля в штробе, гофре и кабель-канале</p>
+        </article>
+        <article class="service-card">
+          <div class="service-card__icon">📦</div>
+          <h3>Монтаж щитов</h3>
+          <p>Установка распределительных щитов, сборка, подключение автоматов, УЗО, счётчиков</p>
+        </article>
+        <article class="service-card">
+          <div class="service-card__icon">💡</div>
+          <h3>Чистовые работы</h3>
+          <p>Установка розеток, выключателей, люстр, светодиодных лент, трековых систем</p>
+        </article>
+        <article class="service-card">
+          <div class="service-card__icon">🔧</div>
+          <h3>Демонтаж и ремонт</h3>
+          <p>Демонтаж старой проводки, поиск неисправностей, работы под напряжением</p>
+        </article>
+        <article class="service-card">
+          <div class="service-card__icon">🏠</div>
+          <h3>Квартиры и дома</h3>
+          <p>Электромонтаж в новостройках, вторичном жилье, частных домах и коттеджах</p>
+        </article>
+        <article class="service-card">
+          <div class="service-card__icon">🏢</div>
+          <h3>Коммерческие объекты</h3>
+          <p>Офисы, магазины, рестораны — проектирование и монтаж по нормам ПУЭ</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="prices" id="prices">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Прайс 2026</span>
+        <h2>Стоимость работ</h2>
+        <p>Актуальные цены на все виды электромонтажных работ. Точная смета — после осмотра объекта</p>
+      </div>
+
+      <div class="price-tabs" id="priceTabs">
+        <button class="price-tab active" data-tab="podrozetniki">Подрозетники</button>
+        <button class="price-tab" data-tab="shtroblenie">Штробление</button>
+        <button class="price-tab" data-tab="sverlenie">Сверление</button>
+        <button class="price-tab" data-tab="kabel">Прокладка кабеля</button>
+        <button class="price-tab" data-tab="shchit">Монтаж щитов</button>
+        <button class="price-tab" data-tab="vstraivaemy">Встраиваемый щит</button>
+        <button class="price-tab" data-tab="raboty-shchit">Работы в щите</button>
+        <button class="price-tab" data-tab="dop">Доп. работы</button>
+        <button class="price-tab" data-tab="chistovye">Чистовые</button>
+        <button class="price-tab" data-tab="demontazh">Демонтаж</button>
+      </div>
+
+      <div class="price-panels">
+        <div class="price-panel active" id="podrozetniki">
+          <table class="price-table">
+            <thead><tr><th>Наименование</th><th>Ед.</th><th>Цена, ₽</th></tr></thead>
+            <tbody>
+              <tr><td>Сверление подрозетника в бетоне</td><td>шт</td><td>700</td></tr>
+              <tr><td>Сверление подрозетника в бетоне СССР</td><td>шт</td><td>900</td></tr>
+              <tr><td>Сверление подрозетника в бетоне + плитка</td><td>шт</td><td>1 000</td></tr>
+              <tr><td>Сверление подрозетника в кирпиче</td><td>шт</td><td>500</td></tr>
+              <tr><td>Сверление подрозетника в газобетоне</td><td>шт</td><td>300</td></tr>
+              <tr><td>Сверление подрозетника в гипсокартоне</td><td>шт</td><td>150</td></tr>
+              <tr><td>Установка (вмазка) подрозетника</td><td>шт</td><td>200</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="price-panel" id="shtroblenie">
+          <table class="price-table">
+            <thead><tr><th>Наименование</th><th>Ед.</th><th>Цена, ₽</th></tr></thead>
+            <tbody>
+              <tr><td>Штробление бетон, штроба 25×20 мм</td><td>м/п</td><td>700</td></tr>
+              <tr><td>Штробление бетон СССР, штроба 25×20 мм</td><td>м/п</td><td>900</td></tr>
+              <tr><td>Штробление кирпич, штроба 25×20 мм</td><td>м/п</td><td>300</td></tr>
+              <tr><td>Штробление газобетон, штроба 25×20 мм</td><td>м/п</td><td>200</td></tr>
+              <tr><td>Штробление потолка под эл. проводку 25×20 мм</td><td>м/п</td><td>1 000</td></tr>
+              <tr><td>Штробление под закладку короба</td><td>м/п</td><td>1 500</td></tr>
+              <tr><td>Черновая замазка штробы</td><td>м/п</td><td>70</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="price-panel" id="sverlenie">
+          <table class="price-table">
+            <thead><tr><th>Наименование</th><th>Ед.</th><th>Цена, ₽</th></tr></thead>
+            <tbody>
+              <tr><td>Сквозное сверление стен бетон до 20 см</td><td>шт</td><td>350</td></tr>
+              <tr><td>Сквозное сверление стен бетон до 50 см</td><td>шт</td><td>650</td></tr>
+              <tr><td>Сквозное сверление стен из кирпича до 20 см</td><td>шт</td><td>350</td></tr>
+              <tr><td>Сквозное сверление стен из кирпича до 50 см</td><td>шт</td><td>550</td></tr>
+              <tr><td>Сквозное сверление стен газобетон до 20 см</td><td>шт</td><td>200</td></tr>
+              <tr><td>Сквозное сверление стен газобетон до 50 см</td><td>шт</td><td>400</td></tr>
+              <tr><td>Сквозное сверление стен древесина до 20 см</td><td>шт</td><td>400</td></tr>
+              <tr><td>Сквозное сверление стен древесина до 50 см</td><td>шт</td><td>800</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="price-panel" id="kabel">
+          <table class="price-table">
+            <thead><tr><th>Наименование</th><th>Ед.</th><th>Цена, ₽</th></tr></thead>
+            <tbody>
+              <tr><td>Прокладка кабеля по потолку/полу, сечением до 2,5 мм</td><td>м/п</td><td>150</td></tr>
+              <tr><td>Прокладка кабеля по потолку/полу, сечением от 4 до 10 мм</td><td>м/п</td><td>250</td></tr>
+              <tr><td>Прокладка кабеля в готовой штробе, сечением до 2,5 мм</td><td>м/п</td><td>80</td></tr>
+              <tr><td>Прокладка кабеля в готовой штробе, сечением от 4 до 10 мм</td><td>м/п</td><td>100</td></tr>
+              <tr><td>Прокладка слаботочного кабеля (аудио, видео, витая пара)</td><td>м/п</td><td>40</td></tr>
+              <tr><td>Прокладка кабеля в гофре, сечением до 2,5 мм</td><td>м/п</td><td>170</td></tr>
+              <tr><td>Прокладка кабеля в гофре, сечением от 4 до 10 мм</td><td>м/п</td><td>270</td></tr>
+              <tr><td>Затяжка кабеля в гофру сечением до 2,5 мм</td><td>м/п</td><td>40</td></tr>
+              <tr><td>Затяжка кабеля в гофру сечением до 10 мм</td><td>м/п</td><td>50</td></tr>
+              <tr><td>Прокладка кабель-канала 25×40</td><td>м/п</td><td>200</td></tr>
+              <tr><td>Прокладка кабель-канала 40×60</td><td>м/п</td><td>250</td></tr>
+              <tr><td>Прокладка кабель-канала 60×120</td><td>м/п</td><td>350</td></tr>
+              <tr><td>Установка накладной распределительной коробки</td><td>шт</td><td>250</td></tr>
+              <tr><td>Расключение распределительной коробки</td><td>шт</td><td>750</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="price-panel" id="shchit">
+          <table class="price-table">
+            <thead><tr><th>Наименование</th><th>Ед.</th><th>Цена, ₽</th></tr></thead>
+            <tbody>
+              <tr><td>Установка и монтаж распределительного щита до 8 модулей</td><td>шт</td><td>3 000</td></tr>
+              <tr><td>Установка и монтаж распределительного щита от 9 до 12 модулей</td><td>шт</td><td>5 000</td></tr>
+              <tr><td>Установка и монтаж распределительного щита от 13 до 18 модулей</td><td>шт</td><td>10 000</td></tr>
+              <tr><td>Установка и монтаж распределительного щита от 19 до 24 модулей</td><td>шт</td><td>15 000</td></tr>
+              <tr><td>Установка и монтаж распределительного щита от 25 до 36 модулей</td><td>шт</td><td>17 000</td></tr>
+              <tr><td>Установка и монтаж распределительного щита от 37 до 48 модулей</td><td>шт</td><td>20 000</td></tr>
+              <tr><td>Установка и монтаж распределительного щита от 49 до 54 модулей</td><td>шт</td><td>25 000</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="price-panel" id="vstraivaemy">
+          <table class="price-table">
+            <thead><tr><th>Наименование</th><th>Ед.</th><th>Цена, ₽</th></tr></thead>
+            <tbody>
+              <tr><td>Устройство ниши под распределительный щит до 8 модулей</td><td>шт</td><td>1 500</td></tr>
+              <tr><td>Устройство ниши под распределительный щит от 9 до 12 модулей</td><td>шт</td><td>3 000</td></tr>
+              <tr><td>Устройство ниши под распределительный щит от 13 до 18 модулей</td><td>шт</td><td>5 000</td></tr>
+              <tr><td>Устройство ниши под распределительный щит от 19 до 24 модулей</td><td>шт</td><td>7 000</td></tr>
+              <tr><td>Устройство ниши под распределительный щит от 25 до 36 модулей</td><td>шт</td><td>10 000</td></tr>
+              <tr><td>Устройство ниши под распределительный щит от 37 до 48 модулей</td><td>шт</td><td>12 000</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="price-panel" id="raboty-shchit">
+          <table class="price-table">
+            <thead><tr><th>Наименование</th><th>Ед.</th><th>Цена, ₽</th></tr></thead>
+            <tbody>
+              <tr><td>Установка и подключение автомата однополюсного</td><td>шт</td><td>400</td></tr>
+              <tr><td>Установка и подключение двухполюсного автомата, УЗО, ДИФ автомата</td><td>шт</td><td>600</td></tr>
+              <tr><td>Установка и подключение трёхполюсного автомата</td><td>шт</td><td>800</td></tr>
+              <tr><td>Установка и подключение четырёхполюсного автомата, УЗО, ДИФ автомата</td><td>шт</td><td>1 200</td></tr>
+              <tr><td>Установка и подключение реле напряжения, мастер свет</td><td>шт</td><td>1 000</td></tr>
+              <tr><td>Установка и подключение однофазного электросчётчика</td><td>шт</td><td>1 500</td></tr>
+              <tr><td>Установка и подключение трёхфазного электросчётчика</td><td>шт</td><td>2 000</td></tr>
+              <tr><td>Поиск неисправности в щите</td><td>—</td><td>500</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="price-panel" id="dop">
+          <table class="price-table">
+            <thead><tr><th>Наименование</th><th>Ед.</th><th>Цена</th></tr></thead>
+            <tbody>
+              <tr><td>Работы под напряжением</td><td>от стоимости работ</td><td>+50%</td></tr>
+              <tr><td>Работы на высоте более 3 м (лестница / леса)</td><td>от стоимости работ</td><td>+20%</td></tr>
+              <tr><td>Работы на высоте более 5 м (лестница / леса)</td><td>от стоимости работ</td><td>+50%</td></tr>
+              <tr><td>Выезд на объект, оценка объёма, разметка, консультация</td><td>—</td><td>1 000 ₽</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="price-panel" id="chistovye">
+          <table class="price-table">
+            <thead><tr><th>Наименование</th><th>Ед.</th><th>Цена, ₽</th></tr></thead>
+            <tbody>
+              <tr><td>Установка выключателя/розетки (1–2 шт)</td><td>шт</td><td>500</td></tr>
+              <tr><td>Установка выключателя/розетки (3–4 шт)</td><td>шт</td><td>400</td></tr>
+              <tr><td>Установка выключателя/розетки (5 и более)</td><td>шт</td><td>350</td></tr>
+              <tr><td>Установка компьютерной, телефонной, антенной розетки</td><td>шт</td><td>450</td></tr>
+              <tr><td>Установка и подключение терморегулятора тёплого пола</td><td>шт</td><td>550</td></tr>
+              <tr><td>Установка и подключение канального вентилятора/вытяжки</td><td>шт</td><td>600</td></tr>
+              <tr><td>Установка звонка</td><td>шт</td><td>500</td></tr>
+              <tr><td>Установка и подключение люстры</td><td>шт</td><td>1 000</td></tr>
+              <tr><td>Установка и подключение бра</td><td>шт</td><td>800</td></tr>
+              <tr><td>Монтаж и подключение светодиодной ленты</td><td>м/п</td><td>300</td></tr>
+              <tr><td>Монтаж профиля под светодиодную ленту</td><td>м/п</td><td>200</td></tr>
+              <tr><td>Установка и подключение блока питания LED-ленты 12/24 В</td><td>шт</td><td>500</td></tr>
+              <tr><td>Монтаж и подключение шинопровода, трековой системы</td><td>м/п</td><td>850</td></tr>
+              <tr><td>Подключение розетки/вилки для электроплиты, духовки 220 V</td><td>шт</td><td>800</td></tr>
+              <tr><td>Подключение розетки/вилки для электроплиты, духовки 380 V</td><td>шт</td><td>900</td></tr>
+              <tr><td>Подключение посудомоечной машины</td><td>шт</td><td>600</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="price-panel" id="demontazh">
+          <table class="price-table">
+            <thead><tr><th>Наименование</th><th>Ед.</th><th>Цена, ₽</th></tr></thead>
+            <tbody>
+              <tr><td>Демонтаж электрической точки (выключатель/розетка)</td><td>шт</td><td>30</td></tr>
+              <tr><td>Демонтаж открытой проводки</td><td>шт</td><td>20</td></tr>
+              <tr><td>Демонтаж потолочного крюка</td><td>шт</td><td>500</td></tr>
+              <tr><td>Демонтаж осветительного прибора (люстра, светильник)</td><td>шт</td><td>100</td></tr>
+              <tr><td>Демонтаж счётчика</td><td>шт</td><td>200</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <p class="prices__note">* Цены указаны без стоимости материалов. Точная смета составляется после осмотра объекта. Выезд на оценку — 1 000 ₽.</p>
+    </div>
+  </section>
+
+  <section class="calculator" id="calculator">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Онлайн-расчёт</span>
+        <h2>Калькулятор стоимости</h2>
+        <p>Выберите работы и укажите количество — получите предварительную смету по актуальному прайсу</p>
+      </div>
+
+      <div class="calc-layout">
+        <div class="calc-panel">
+          <div class="calc-toolbar">
+            <input type="search" id="calcSearch" class="calc-search" placeholder="Поиск по работам…" autocomplete="off">
+            <div class="calc-categories" id="calcCategories"></div>
+          </div>
+          <div class="calc-catalog" id="calcCatalog"></div>
+        </div>
+
+        <aside class="calc-summary">
+          <h3 class="calc-summary__title">Ваша смета</h3>
+          <div class="calc-summary__list" id="calcSummaryList"></div>
+
+          <div class="calc-summary__options">
+            <p class="calc-summary__label">Дополнительные условия</p>
+            <div id="calcSurcharges"></div>
+            <label class="calc-check">
+              <input type="checkbox" id="calcVisit">
+              <span>Выезд на объект, оценка, консультация <em>1 000 ₽</em></span>
+            </label>
+          </div>
+
+          <div class="calc-summary__totals">
+            <div class="calc-summary__total-row">
+              <span>Работы</span>
+              <span id="calcSubtotal">0 ₽</span>
+            </div>
+            <div id="calcExtras"></div>
+            <div class="calc-summary__total-row calc-summary__total-row--final">
+              <span>Итого</span>
+              <strong id="calcTotal">0 ₽</strong>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn--primary btn--full" id="calcSendBtn" disabled>Отправить заявку со сметой</button>
+          <button type="button" class="btn btn--outline btn--full" id="calcClearBtn">Очистить</button>
+          <p class="calc-disclaimer">* Предварительный расчёт. Материалы не включены. Точная стоимость — после осмотра объекта.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="advantages" id="advantages">
+    <div class="container">
+      <div class="section-header section-header--light">
+        <span class="section-tag">Почему мы</span>
+        <h2>Работаем на результат</h2>
+      </div>
+      <div class="advantages__grid">
+        <div class="advantage">
+          <div class="advantage__num">01</div>
+          <h3>Опытные мастера</h3>
+          <p>Все специалисты с допуском и опытом от 5 лет. Работаем строго по ПУЭ и ГОСТ.</p>
+        </div>
+        <div class="advantage">
+          <div class="advantage__num">02</div>
+          <h3>Фиксированная смета</h3>
+          <p>Стоимость согласовываем до начала работ. Никаких скрытых доплат по ходу монтажа.</p>
+        </div>
+        <div class="advantage">
+          <div class="advantage__num">03</div>
+          <h3>Гарантия 2 года</h3>
+          <p>Даём письменную гарантию на все виды электромонтажных работ.</p>
+        </div>
+        <div class="advantage">
+          <div class="advantage__num">04</div>
+          <h3>Чистота на объекте</h3>
+          <p>Убираем за собой строительный мусор. Оставляем объект в порядке.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="team" id="team">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Наша команда</span>
+        <h2>Мастера, которым можно доверять</h2>
+        <p>Профессиональные электромонтажники с многолетним опытом</p>
+      </div>
+      <div class="team__grid">
+        <article class="team-card">
+          <div class="team-card__photo">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop" alt="Алексей — бригадир">
+          </div>
+          <h3>Алексей</h3>
+          <span class="team-card__role">Бригадир, стаж 12 лет</span>
+        </article>
+        <article class="team-card">
+          <div class="team-card__photo">
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop" alt="Дмитрий — электромонтажник">
+          </div>
+          <h3>Дмитрий</h3>
+          <span class="team-card__role">Электромонтажник, стаж 8 лет</span>
+        </article>
+        <article class="team-card">
+          <div class="team-card__photo">
+            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=500&fit=crop" alt="Игорь — электромонтажник">
+          </div>
+          <h3>Игорь</h3>
+          <span class="team-card__role">Электромонтажник, стаж 6 лет</span>
+        </article>
+        <article class="team-card">
+          <div class="team-card__photo">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop" alt="Сергей — электромонтажник">
+          </div>
+          <h3>Сергей</h3>
+          <span class="team-card__role">Электромонтажник, стаж 5 лет</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="process">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Как мы работаем</span>
+        <h2>4 простых шага</h2>
+      </div>
+      <div class="process__steps">
+        <div class="step">
+          <div class="step__num">1</div>
+          <h3>Заявка</h3>
+          <p>Оставляете заявку или звоните — обсуждаем задачу</p>
+        </div>
+        <div class="step">
+          <div class="step__num">2</div>
+          <h3>Осмотр</h3>
+          <p>Выезжаем на объект, оцениваем объём и составляем смету</p>
+        </div>
+        <div class="step">
+          <div class="step__num">3</div>
+          <h3>Монтаж</h3>
+          <p>Выполняем работы в согласованные сроки</p>
+        </div>
+        <div class="step">
+          <div class="step__num">4</div>
+          <h3>Сдача</h3>
+          <p>Проверяем, сдаём объект и выдаём гарантию</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="container contact__inner">
+      <div class="contact__info">
+        <span class="section-tag">Связаться с нами</span>
+        <h2>Оставьте заявку</h2>
+        <p>Перезвоним в течение 30 минут, ответим на вопросы и согласуем выезд на объект</p>
+        <div class="contact__details">
+          <a href="tel:+79000000000" class="contact__item">
+            <span class="contact__icon">📞</span>
+            <div>
+              <strong>Телефон</strong>
+              <span>+7 (900) 000-00-00</span>
+            </div>
+          </a>
+          <a href="mailto:info@elektromontazh.ru" class="contact__item">
+            <span class="contact__icon">✉️</span>
+            <div>
+              <strong>Email</strong>
+              <span>info@elektromontazh.ru</span>
+            </div>
+          </a>
+          <div class="contact__item">
+            <span class="contact__icon">🕐</span>
+            <div>
+              <strong>Режим работы</strong>
+              <span>Пн–Сб: 8:00 – 20:00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form class="contact__form" id="contactForm">
+        <input type="text" name="name" placeholder="Ваше имя" required>
+        <input type="tel" name="phone" placeholder="Телефон" required>
+        <textarea name="message" placeholder="Опишите задачу (необязательно)" rows="4"></textarea>
+        <button type="submit" class="btn btn--primary btn--full">Отправить заявку</button>
+        <p class="form-success" id="formSuccess" hidden>Заявка отправлена! Перезвоним в ближайшее время.</p>
+        <p class="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных</p>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="#" class="logo">
+          <span class="logo__icon">⚡</span>
+          <span class="logo__text">Электро<span>Монтаж</span></span>
+        </a>
+        <p>Профессиональный электромонтаж в Москве и Московской области</p>
+      </div>
+      <div class="footer__links">
+        <a href="#services">Услуги</a>
+        <a href="#prices">Прайс</a>
+        <a href="#calculator">Калькулятор</a>
+        <a href="#team">Команда</a>
+        <a href="#contact">Контакты</a>
+      </div>
+      <div class="footer__copy">
+        <p>&copy; 2026 ЭлектроМонтаж. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="tel:+79000000000" class="float-btn" aria-label="Позвонить">📞</a>
+
+  <script src="prices-data.js"></script>
+  <script src="calculator.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
