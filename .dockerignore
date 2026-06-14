@@ -1,0 +1,16 @@
+**/.git
+**/.vs
+**/.idea
+**/bin
+**/obj
+**/*.user
+**/*.db
+**/*.db-*
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.production.example
+**/terminals
+**/agent-transcripts
+**/*.log
+**/node_modules

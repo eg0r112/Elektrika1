@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] — Elektrika Admin</title>
+    <link rel="stylesheet" href="~/css/admin.css" />
+</head>
+<body>
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <header class="topbar">
+            <a href="/" class="brand">Elektrika Admin</a>
+            <nav>
+                <a href="/">Заявки</a>
+                <a href="/Prices">Прайс</a>
+                <form method="post" action="/Logout" class="logout-form">
+                    <button type="submit">Выйти</button>
+                </form>
+            </nav>
+        </header>
+    }
+    <main class="container">
+        @RenderBody()
+    </main>
+</body>
+</html>

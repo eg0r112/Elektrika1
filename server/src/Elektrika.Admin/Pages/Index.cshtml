@@ -1,0 +1,90 @@
+@page
+@model Elektrika.Admin.Pages.IndexModel
+@{
+    ViewData["Title"] = "Заявки";
+}
+
+<h1>Заявки</h1>
+
+@if (Model.Orders.Count == 0)
+{
+    <p style="color:var(--muted);">Пока нет заявок.</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Клиент</th>
+                <th>Телефон</th>
+                <th>Сумма</th>
+                <th>Статус</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.Orders)
+            {
+                <tr>
+                    <td>@order.CreatedAtUtc.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>@order.CustomerName</td>
+                    <td><a href="tel:@order.Phone">@order.Phone</a></td>
+                    <td>@order.Total.ToString("N0") ₽</td>
+                    <td>
+                        <span class="status @Model.StatusClass(order.Status)">@Model.StatusLabel(order.Status)</span>
+                    </td>
+                    <td>
+                        <form method="post" asp-page-handler="Status" style="display:inline;">
+                            <input type="hidden" name="orderId" value="@order.Id" />
+                            <select name="status" onchange="this.form.submit()">
+                                @foreach (OrderStatus value in Enum.GetValues<OrderStatus>())
+                                {
+                                    if (order.Status == value)
+                                    {
+                                        <option value="@((int)value)" selected>@Model.StatusLabel(value)</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@((int)value)">@Model.StatusLabel(value)</option>
+                                    }
+                                }
+                            </select>
+                        </form>
+                    </td>
+                </tr>
+                var details = Model.GetOrderDetails(order);
+                @if (details is not null || !string.IsNullOrWhiteSpace(order.Message))
+                {
+                    <tr>
+                        <td colspan="6" style="font-size:.85rem;padding-top:0;">
+                            @if (details is not null)
+                            {
+                                <div style="margin-bottom:8px;">
+                                    <strong>Что сделать:</strong>
+                                    @foreach (var line in details.Lines)
+                                    {
+                                        <div style="color:var(--muted);">@line.Name — @line.Quantity @line.Unit — @line.LineTotal.ToString("N0") ₽</div>
+                                    }
+                                    @foreach (var surcharge in details.Surcharges)
+                                    {
+                                        <div style="color:var(--muted);">@surcharge.Label (+@surcharge.Percent%) — @surcharge.Amount.ToString("N0") ₽</div>
+                                    }
+                                    @if (details.VisitFee > 0)
+                                    {
+                                        <div style="color:var(--muted);">Выезд на объект — @details.VisitFee.ToString("N0") ₽</div>
+                                    }
+                                    <div style="margin-top:6px;font-weight:600;">Итого: @details.Total.ToString("N0") ₽</div>
+                                </div>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(order.Message))
+                            {
+                                <div style="color:var(--muted);"><strong>Комментарий:</strong> @order.Message</div>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}

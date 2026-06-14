@@ -1,0 +1,32 @@
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+
+COPY server/Elektrika.sln ./server/
+COPY server/src/Elektrika.Domain/Elektrika.Domain.csproj ./server/src/Elektrika.Domain/
+COPY server/src/Elektrika.Application/Elektrika.Application.csproj ./server/src/Elektrika.Application/
+COPY server/src/Elektrika.Infrastructure/Elektrika.Infrastructure.csproj ./server/src/Elektrika.Infrastructure/
+COPY server/src/Elektrika.Admin/Elektrika.Admin.csproj ./server/src/Elektrika.Admin/
+
+RUN dotnet restore ./server/src/Elektrika.Admin/Elektrika.Admin.csproj
+
+COPY server/src/ ./server/src/
+RUN dotnet publish ./server/src/Elektrika.Admin/Elektrika.Admin.csproj -c Release -o /app/publish --no-restore
+
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
+WORKDIR /app
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=build /app/publish ./
+
+ENV ASPNETCORE_ENVIRONMENT=Production
+ENV ASPNETCORE_URLS=http://+:8080
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
+  CMD curl -fsS http://localhost:8080/Login || exit 1
+
+ENTRYPOINT ["dotnet", "Elektrika.Admin.dll"]

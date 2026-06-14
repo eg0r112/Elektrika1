@@ -1,0 +1,106 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: elektrika
+      POSTGRES_USER: elektrika
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - elektrika_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U elektrika -d elektrika"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - internal
+
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-elektrika}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:?Set RABBITMQ_PASSWORD in .env}
+    volumes:
+      - elektrika_rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - internal
+
+  api:
+    build:
+      context: ..
+      dockerfile: server/Dockerfile.api
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=elektrika;Username=elektrika;Password=${POSTGRES_PASSWORD}
+      Jwt__Secret: ${JWT_SECRET:?Set JWT_SECRET in .env}
+      RabbitMq__Host: rabbitmq
+      RabbitMq__Port: 5672
+      RabbitMq__Username: ${RABBITMQ_USER:-elektrika}
+      RabbitMq__Password: ${RABBITMQ_PASSWORD}
+      RabbitMq__OrderQueueName: elektrika.order.notifications
+      Telegram__Enabled: "true"
+      Telegram__BotToken: ${TELEGRAM_BOT_TOKEN:?Set TELEGRAM_BOT_TOKEN in .env}
+      Telegram__ChatIds__0: ${TELEGRAM_CHAT_ID:?Set TELEGRAM_CHAT_ID in .env}
+      Cors__AllowedOrigins__0: https://${DOMAIN:?Set DOMAIN in .env}
+      AllowedHosts: ${DOMAIN}
+      ADMIN_INITIAL_PASSWORD: ${ADMIN_INITIAL_PASSWORD:?Set ADMIN_INITIAL_PASSWORD in .env}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - internal
+
+  admin:
+    build:
+      context: ..
+      dockerfile: server/Dockerfile.admin
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=elektrika;Username=elektrika;Password=${POSTGRES_PASSWORD}
+      AllowedHosts: ${ADMIN_DOMAIN:?Set ADMIN_DOMAIN in .env}
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - internal
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN}
+      ADMIN_DOMAIN: ${ADMIN_DOMAIN}
+      ACME_EMAIL: ${ACME_EMAIL:-}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - api
+      - admin
+    networks:
+      - internal
+
+volumes:
+  elektrika_pg_data:
+  elektrika_rabbitmq_data:
+  caddy_data:
+  caddy_config:
+
+networks:
+  internal:
+    driver: bridge

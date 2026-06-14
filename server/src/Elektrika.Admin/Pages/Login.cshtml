@@ -1,0 +1,34 @@
+@page
+@model Elektrika.Admin.Pages.LoginModel
+@{
+    ViewData["Title"] = "Вход";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Вход — Elektrika Admin</title>
+    <link rel="stylesheet" href="~/css/admin.css" />
+</head>
+<body>
+    <main class="container" style="min-height:100vh;display:flex;align-items:center;justify-content:center;">
+        <div class="card">
+            <h1 style="margin-bottom:8px;">Elektrika Admin</h1>
+            <p style="color:var(--muted);margin-bottom:20px;">Управление заявками и прайсом</p>
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <p class="error">@Model.ErrorMessage</p>
+            }
+            <form method="post" asp-page="/Login">
+                <label for="username">Логин</label>
+                <input id="username" name="username" value="@Model.Username" required autocomplete="username" />
+                <label for="password">Пароль</label>
+                <input id="password" name="password" type="password" required autocomplete="current-password" />
+                <button type="submit">Войти</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

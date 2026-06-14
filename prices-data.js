@@ -1,4 +1,4 @@
-const PRICE_CATALOG = [
+let PRICE_CATALOG = [
   { id: 'p1', category: 'Подрозетники', name: 'Сверление подрозетника в бетоне', unit: 'шт', price: 700 },
   { id: 'p2', category: 'Подрозетники', name: 'Сверление подрозетника в бетоне СССР', unit: 'шт', price: 900 },
   { id: 'p3', category: 'Подрозетники', name: 'Сверление подрозетника в бетоне + плитка', unit: 'шт', price: 1000 },
@@ -87,12 +87,12 @@ const PRICE_CATALOG = [
   { id: 'd5', category: 'Демонтаж', name: 'Демонтаж счётчика', unit: 'шт', price: 200 },
 ];
 
-const PRICE_CATEGORIES = [...new Set(PRICE_CATALOG.map(item => item.category))];
+let PRICE_CATEGORIES = [...new Set(PRICE_CATALOG.map(item => item.category))];
 
-const SURCHARGES = [
+let SURCHARGES = [
   { id: 'voltage', label: 'Работы под напряжением', percent: 50 },
   { id: 'height3', label: 'Работы на высоте более 3 м', percent: 20 },
   { id: 'height5', label: 'Работы на высоте более 5 м', percent: 50 },
 ];
 
-const VISIT_FEE = 1000;
+let VISIT_FEE = 1000;

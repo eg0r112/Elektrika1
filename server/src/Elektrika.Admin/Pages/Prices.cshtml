@@ -1,0 +1,47 @@
+@page
+@model Elektrika.Admin.Pages.PricesModel
+@{
+    ViewData["Title"] = "Прайс";
+}
+
+<h1>Прайс</h1>
+<p style="color:var(--muted);margin-bottom:20px;">Выезд на оценку: @Model.Catalog.VisitFee.ToString("N0") ₽</p>
+
+@foreach (var category in Model.Catalog.Categories)
+{
+    <h2 style="margin:24px 0 12px;font-size:1.1rem;color:var(--accent);">@category.Name</h2>
+
+    @foreach (var item in category.Items)
+    {
+        <form method="post" asp-page-handler="Update" class="price-form @(item.IsActive ? "" : "inactive")">
+            <input type="hidden" name="id" value="@item.Id" />
+            <input type="hidden" name="categoryId" value="@item.CategoryId" />
+            <div>
+                <label>Наименование</label>
+                <input name="name" value="@item.Name" required />
+            </div>
+            <div>
+                <label>Ед.</label>
+                <input name="unit" value="@item.Unit" required />
+            </div>
+            <div>
+                <label>Цена</label>
+                <input name="price" type="number" step="1" min="0" value="@item.Price" required />
+            </div>
+            <div>
+                <label>Порядок</label>
+                <input name="sortOrder" type="number" value="@item.SortOrder" />
+            </div>
+            <div style="display:flex;gap:8px;">
+                <button type="submit">Сохранить</button>
+            </div>
+        </form>
+        <form method="post" asp-page-handler="Toggle" style="padding:0 12px 12px;">
+            <input type="hidden" name="id" value="@item.Id" />
+            <input type="hidden" name="isActive" value="@(!item.IsActive)" />
+            <button type="submit" class="btn-secondary" style="font-size:.8rem;padding:8px 12px;">
+                @(item.IsActive ? "Скрыть" : "Показать")
+            </button>
+        </form>
+    }
+}

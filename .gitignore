@@ -1,0 +1,30 @@
+# .NET
+**/bin/
+**/obj/
+*.user
+*.suo
+*.DotSettings.user
+
+# Secrets & local config
+**/*.local.json
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# IDE
+.vs/
+.idea/
+*.swp
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
+
+# Local SQLite (dev only)
+*.db
+*.db-shm
+*.db-wal

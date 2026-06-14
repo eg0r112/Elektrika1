@@ -1,0 +1,37 @@
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+
+COPY server/Elektrika.sln ./server/
+COPY server/src/Elektrika.Domain/Elektrika.Domain.csproj ./server/src/Elektrika.Domain/
+COPY server/src/Elektrika.Application/Elektrika.Application.csproj ./server/src/Elektrika.Application/
+COPY server/src/Elektrika.Infrastructure/Elektrika.Infrastructure.csproj ./server/src/Elektrika.Infrastructure/
+COPY server/src/Elektrika.Api/Elektrika.Api.csproj ./server/src/Elektrika.Api/
+
+RUN dotnet restore ./server/src/Elektrika.Api/Elektrika.Api.csproj
+
+COPY server/src/ ./server/src/
+RUN dotnet publish ./server/src/Elektrika.Api/Elektrika.Api.csproj -c Release -o /app/publish --no-restore
+
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
+WORKDIR /app
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=build /app/publish ./
+
+RUN mkdir -p /app/site
+COPY index.html styles.css script.js api.js config.js utils.js errors.js calculator.js prices.js /app/site/
+COPY images/ /app/site/images/
+
+ENV ASPNETCORE_ENVIRONMENT=Production
+ENV ASPNETCORE_URLS=http://+:8080
+ENV SITE_CONTENT_ROOT=/app/site
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
+  CMD curl -fsS http://localhost:8080/health || exit 1
+
+ENTRYPOINT ["dotnet", "Elektrika.Api.dll"]

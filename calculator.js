@@ -6,6 +6,11 @@ const state = {
   search: '',
 };
 
+let PRICE_CATALOG = [];
+let PRICE_CATEGORIES = [];
+let SURCHARGES = [];
+let VISIT_FEE = 1000;
+
 function formatPrice(n) {
   return n.toLocaleString('ru-RU') + ' ₽';
 }
@@ -69,9 +74,10 @@ function renderCategoryTabs() {
   if (!container) return;
 
   container.innerHTML = getCategories().map(cat => {
-    const label = cat === 'all' ? 'Все' : cat;
+    const label = cat === 'all' ? 'Все' : escapeHtml(cat);
     const active = state.category === cat ? 'active' : '';
-    return `<button type="button" class="calc-cat ${active}" data-cat="${cat}">${label}</button>`;
+    const catValue = escapeHtml(cat);
+    return `<button type="button" class="calc-cat ${active}" data-cat="${catValue}">${label}</button>`;
   }).join('');
 
   container.querySelectorAll('.calc-cat').forEach(btn => {
@@ -97,11 +103,11 @@ function renderCatalog() {
     const qty = state.quantities[item.id] || 0;
     const active = qty > 0 ? 'calc-item--active' : '';
     return `
-      <div class="calc-item ${active}" data-id="${item.id}">
+      <div class="calc-item ${active}" data-id="${escapeHtml(item.id)}">
         <div class="calc-item__info">
-          <span class="calc-item__cat">${item.category}</span>
-          <span class="calc-item__name">${item.name}</span>
-          <span class="calc-item__price">${formatPrice(item.price)} / ${item.unit}</span>
+          <span class="calc-item__cat">${escapeHtml(item.category)}</span>
+          <span class="calc-item__name">${escapeHtml(item.name)}</span>
+          <span class="calc-item__price">${formatPrice(item.price)} / ${escapeHtml(item.unit)}</span>
         </div>
         <div class="calc-item__qty">
           <button type="button" class="calc-qty-btn" data-action="minus" aria-label="Уменьшить">−</button>
@@ -145,8 +151,8 @@ function renderSummary() {
   } else {
     list.innerHTML = lines.map(line => `
       <div class="calc-summary__row">
-        <div class="calc-summary__name">${line.name}</div>
-        <div class="calc-summary__meta">${line.qty} ${line.unit} × ${formatPrice(line.price)}</div>
+        <div class="calc-summary__name">${escapeHtml(line.name)}</div>
+        <div class="calc-summary__meta">${line.qty} ${escapeHtml(line.unit)} × ${formatPrice(line.price)}</div>
         <div class="calc-summary__sum">${formatPrice(line.sum)}</div>
       </div>
     `).join('');
@@ -177,8 +183,8 @@ function renderSurcharges() {
 
   container.innerHTML = SURCHARGES.map(s => `
     <label class="calc-check">
-      <input type="checkbox" name="surcharge" value="${s.id}" ${state.surcharges.has(s.id) ? 'checked' : ''}>
-      <span>${s.label} <em>+${s.percent}%</em></span>
+      <input type="checkbox" name="surcharge" value="${escapeHtml(s.id)}" ${state.surcharges.has(s.id) ? 'checked' : ''}>
+      <span>${escapeHtml(s.label)} <em>+${s.percent}%</em></span>
     </label>
   `).join('');
 
@@ -205,33 +211,51 @@ function clearCalculator() {
   state.surcharges.clear();
   state.visit = false;
   document.getElementById('calcVisit').checked = false;
+  clearEstimateInForm();
   renderSurcharges();
   render();
 }
 
-function buildEstimateMessage() {
-  const { lines, subtotal, surchargeLines, visitAmount, total } = calculateTotals();
+function buildEstimateSummary() {
+  const { lines, surchargeLines, visitAmount, total } = calculateTotals();
 
-  let text = 'Здравствуйте! Просьба рассчитать заказ по предварительной смете:\n\n';
-
-  lines.forEach(line => {
-    text += `• ${line.name} — ${line.qty} ${line.unit} × ${line.price} ₽ = ${line.sum.toLocaleString('ru-RU')} ₽\n`;
-  });
-
-  text += `\nПодытог: ${subtotal.toLocaleString('ru-RU')} ₽`;
+  const items = lines.map(line =>
+    `${line.name} — ${line.qty} ${line.unit} — ${line.sum.toLocaleString('ru-RU')} ₽`
+  );
 
   surchargeLines.forEach(s => {
-    text += `\n${s.label} (+${s.percent}%): ${s.amount.toLocaleString('ru-RU')} ₽`;
+    items.push(`${s.label} (+${s.percent}%) — ${s.amount.toLocaleString('ru-RU')} ₽`);
   });
 
   if (visitAmount) {
-    text += `\nВыезд на объект: ${visitAmount.toLocaleString('ru-RU')} ₽`;
+    items.push(`Выезд на объект — ${visitAmount.toLocaleString('ru-RU')} ₽`);
   }
 
-  text += `\n\nИТОГО: ${total.toLocaleString('ru-RU')} ₽`;
-  text += '\n\n(Предварительный расчёт с сайта)';
+  items.push(`Итого: ${total.toLocaleString('ru-RU')} ₽`);
 
-  return text;
+  return items;
+}
+
+function showEstimateInForm() {
+  const block = document.getElementById('orderEstimate');
+  const body = document.getElementById('orderEstimateBody');
+  if (!block || !body) return;
+
+  const items = buildEstimateSummary();
+  if (!items.length) {
+    clearEstimateInForm();
+    return;
+  }
+
+  body.innerHTML = items.map(text => `<div class="order-estimate__line">${escapeHtml(text)}</div>`).join('');
+  block.hidden = false;
+}
+
+function clearEstimateInForm() {
+  const block = document.getElementById('orderEstimate');
+  const body = document.getElementById('orderEstimateBody');
+  if (body) body.innerHTML = '';
+  if (block) block.hidden = true;
 }
 
 function initCalculator() {
@@ -256,12 +280,9 @@ function initCalculator() {
     const { lines } = calculateTotals();
     if (!lines.length) return;
 
-    const form = document.getElementById('contactForm');
-    const messageField = form?.querySelector('[name="message"]');
-    if (messageField) {
-      messageField.value = buildEstimateMessage();
-    }
+    showEstimateInForm();
 
+    const form = document.getElementById('contactForm');
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
     form?.querySelector('[name="name"]')?.focus();
   });
@@ -272,4 +293,92 @@ function initCalculator() {
   render();
 }
 
-document.addEventListener('DOMContentLoaded', initCalculator);
+async function loadCatalogFromApi() {
+  if (typeof fetchPriceCatalog !== 'function') {
+    return false;
+  }
+
+  const data = await fetchPriceCatalog();
+  if (!data?.categories) {
+    return false;
+  }
+
+  PRICE_CATALOG = [];
+  PRICE_CATEGORIES = [];
+
+  data.categories.forEach(category => {
+    PRICE_CATEGORIES.push(category.name);
+    category.items.forEach(item => {
+      PRICE_CATALOG.push({
+        id: item.legacyKey,
+        category: category.name,
+        name: item.name,
+        unit: item.unit,
+        price: item.price,
+      });
+    });
+  });
+
+  if (Array.isArray(data.surcharges)) {
+    SURCHARGES.length = 0;
+    data.surcharges.forEach(s => {
+      SURCHARGES.push({ id: s.legacyKey, label: s.label, percent: s.percent });
+    });
+  }
+
+  if (typeof data.visitFee === 'number') {
+    VISIT_FEE = data.visitFee;
+  }
+
+  return true;
+}
+
+function getOrderPayloadFromCalculator() {
+  const lines = getLineItems();
+  if (!lines.length) {
+    return null;
+  }
+
+  return {
+    lines: lines.map(line => ({
+      legacyKey: line.id,
+      quantity: line.qty,
+    })),
+    surchargeKeys: [...state.surcharges],
+    includeVisit: state.visit,
+  };
+}
+
+function showCalculatorError() {
+  const layout = document.querySelector('.calc-layout');
+  if (!layout) return;
+
+  showServerError(
+    layout,
+    'Не удалось загрузить калькулятор',
+    'Обновите страницу или позвоните нам — поможем рассчитать стоимость.'
+  );
+
+  appendRetryButton(layout, async () => {
+    if (typeof clearPriceCatalogCache === 'function') {
+      clearPriceCatalogCache();
+    }
+
+    const loaded = await loadCatalogFromApi();
+    if (loaded) {
+      initCalculator();
+    } else {
+      showCalculatorError();
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const loaded = await loadCatalogFromApi();
+  if (!loaded) {
+    showCalculatorError();
+    return;
+  }
+
+  initCalculator();
+});
