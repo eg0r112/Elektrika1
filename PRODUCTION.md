@@ -52,7 +52,7 @@ nano .env
 - `DOMAIN`, `ADMIN_DOMAIN`, `ACME_EMAIL`
 - `POSTGRES_PASSWORD`, `RABBITMQ_PASSWORD`, `JWT_SECRET`
 - `ADMIN_INITIAL_PASSWORD` (логин admin создаётся при первом запуске)
-- `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`
+- `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_IDS` (через запятую — несколько получателей)
 
 ### 4. Запустить
 

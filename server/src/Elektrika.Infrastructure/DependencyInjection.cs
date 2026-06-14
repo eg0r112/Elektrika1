@@ -18,6 +18,20 @@ public static class DependencyInjection
     {
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
         services.Configure<TelegramOptions>(configuration.GetSection(TelegramOptions.SectionName));
+        services.PostConfigure<TelegramOptions>(options =>
+        {
+            // Production .env: TELEGRAM_CHAT_IDS=111,222,333 (comma-separated)
+            var envIds = Environment.GetEnvironmentVariable("TELEGRAM_CHAT_IDS")
+                ?? Environment.GetEnvironmentVariable("TELEGRAM_CHAT_ID");
+            if (string.IsNullOrWhiteSpace(envIds))
+            {
+                return;
+            }
+
+            options.ChatIds = envIds
+                .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .ToList();
+        });
         services.Configure<RabbitMqOptions>(configuration.GetSection(RabbitMqOptions.SectionName));
 
         var connectionString = configuration.GetConnectionString("DefaultConnection")

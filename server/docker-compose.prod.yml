@@ -48,7 +48,7 @@ services:
       RabbitMq__OrderQueueName: elektrika.order.notifications
       Telegram__Enabled: "true"
       Telegram__BotToken: ${TELEGRAM_BOT_TOKEN:?Set TELEGRAM_BOT_TOKEN in .env}
-      Telegram__ChatIds__0: ${TELEGRAM_CHAT_ID:?Set TELEGRAM_CHAT_ID in .env}
+      TELEGRAM_CHAT_IDS: ${TELEGRAM_CHAT_IDS:?Set TELEGRAM_CHAT_IDS in .env}
       Cors__AllowedOrigins__0: https://${DOMAIN:?Set DOMAIN in .env}
       AllowedHosts: ${DOMAIN}
       ADMIN_INITIAL_PASSWORD: ${ADMIN_INITIAL_PASSWORD:?Set ADMIN_INITIAL_PASSWORD in .env}
