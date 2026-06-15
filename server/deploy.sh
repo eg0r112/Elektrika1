@@ -15,8 +15,8 @@ set -a
 source .env
 set +a
 
-API_IMAGE="${IMAGE_API:-${GHCR_IMAGE_API:-ghcr.io/eg0r112/elektrika1-api:latest}}"
-ADMIN_IMAGE="${IMAGE_ADMIN:-${GHCR_IMAGE_ADMIN:-ghcr.io/eg0r112/elektrika1-admin:latest}}"
+API_IMAGE="${IMAGE_API:-eg0r112/elektrika1-api:latest}"
+ADMIN_IMAGE="${IMAGE_ADMIN:-eg0r112/elektrika1-admin:latest}"
 
 pull_image() {
   local image=$1

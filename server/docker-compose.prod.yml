@@ -33,7 +33,7 @@ services:
       - internal
 
   api:
-    image: ${IMAGE_API:-${GHCR_IMAGE_API:-ghcr.io/eg0r112/elektrika1-api:latest}}
+    image: ${IMAGE_API:-eg0r112/elektrika1-api:latest}
     pull_policy: missing
     restart: unless-stopped
     environment:
@@ -60,7 +60,7 @@ services:
       - internal
 
   admin:
-    image: ${IMAGE_ADMIN:-${GHCR_IMAGE_ADMIN:-ghcr.io/eg0r112/elektrika1-admin:latest}}
+    image: ${IMAGE_ADMIN:-eg0r112/elektrika1-admin:latest}
     pull_policy: missing
     restart: unless-stopped
     environment:
