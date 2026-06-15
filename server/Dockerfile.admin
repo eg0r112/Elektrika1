@@ -1,4 +1,4 @@
-FROM bitnami/dotnet-sdk:9 AS build
+FROM bitnami/dotnet-sdk:latest AS build
 USER root
 WORKDIR /src
 
