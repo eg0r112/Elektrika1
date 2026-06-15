@@ -10,8 +10,17 @@ if [[ ! -f .env ]]; then
   exit 1
 fi
 
-echo "Building and starting production stack..."
-docker compose -f docker-compose.prod.yml up -d --build
+echo "Pulling app images from GHCR (built by GitHub Actions)..."
+if ! docker compose -f docker-compose.prod.yml pull api admin; then
+  echo ""
+  echo "GHCR pull failed. For a private repo, login first:"
+  echo "  docker login ghcr.io -u YOUR_GITHUB_USER -p YOUR_GITHUB_PAT"
+  echo "Or make packages public: GitHub -> Packages -> elektrika1-api -> Package settings"
+  exit 1
+fi
+
+echo "Starting production stack..."
+docker compose -f docker-compose.prod.yml up -d
 
 echo ""
 echo "Waiting for services..."
