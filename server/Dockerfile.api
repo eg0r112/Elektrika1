@@ -1,5 +1,9 @@
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM ubuntu:24.04 AS build
 WORKDIR /src
+
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends dotnet-sdk-9.0 \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY server/Elektrika.sln ./server/
 COPY server/src/Elektrika.Domain/Elektrika.Domain.csproj ./server/src/Elektrika.Domain/
@@ -12,11 +16,11 @@ RUN dotnet restore ./server/src/Elektrika.Api/Elektrika.Api.csproj
 COPY server/src/ ./server/src/
 RUN dotnet publish ./server/src/Elektrika.Api/Elektrika.Api.csproj -c Release -o /app/publish --no-restore
 
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
+FROM ubuntu:24.04 AS runtime
 WORKDIR /app
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends curl \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends aspnetcore-runtime-9.0 curl ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /app/publish ./
